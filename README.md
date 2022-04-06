@@ -3,6 +3,8 @@
 
 Troll your friends with a circuit that simulate a keyboard and send some pre-programmed keystrokes, like alt + tab, capslock or even a Rick roll!
 
+![Device](/miscs/real_one.jpeg "Device")
+
 ## Material
  * ESP32 (Should work with esp8266 too)
  * LCD 16x2 with I2C
@@ -23,7 +25,7 @@ Troll your friends with a circuit that simulate a keyboard and send some pre-pro
 ## How use
 
 Upload the esp-troll.ino code to your Esp, connect to your friend's computer and power on your Esp. You should use the buttons 34 and 39 to navegate through the panel, when you find a one that you like, simple press the action button (35).
-It works with Linux and Windows, I never tested with Mac.
+It works with Linux and Windows, I never tested with Mac. The keyboard is based in english layout
 
 ## Functions
 
