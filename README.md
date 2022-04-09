@@ -26,7 +26,9 @@ Troll your friends with a circuit that simulate a keyboard and send some pre-pro
 
 ## How use
 
-Upload the esp-troll.ino code to your Esp, connect to your friend's computer and power on your Esp. You should use the buttons 34 and 39 to navegate through the panel, when you find a one that you like, simple press the action button (35).
+Upload the esp-troll.ino code to your Esp, power on your Esp and connect to your friend's computer. It should appear with the name **GenericMonitor** (You can change this name in line 7).
+
+Use the buttons 34 and 39 to navegate through the panel, when you find the one that you like, simple press the action button (35).
 It works with Linux and Windows, I never tested with Mac. The keyboard is based in english layout
 
 ## Functions
@@ -52,4 +54,4 @@ It works with Linux and Windows, I never tested with Mac. The keyboard is based 
 
 ### My code do not upload
 
-Check if you are using the GND pin above 5V, if you are using, than change to other one, like in the Circuit pic.
+Check if you are using the GND pin above 5V, if you are using, than change to other GND, like in the [Circuit](https://github.com/ZerepL/esp-troll/blob/main/miscs/circuit.png) pic.
