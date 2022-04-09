@@ -26,29 +26,29 @@ Troll your friends with a circuit that simulate a keyboard and send some pre-pro
 
 ## How use
 
-Upload the esp-troll.ino code to your Esp, power on your Esp and connect to your friend's computer. It should appear with the name **GenericMonitor** (You can change this name in line 7).
+Upload the esp-troll.ino code to your Esp, power on and connect to your friend's computer. It should appear with the name **GenericMonitor** (You can change this name in line 7).
 
 Use the buttons 34 and 39 to navegate through the panel, when you find the one that you like, simple press the action button (35).
 It works with Linux and Windows, I never tested with Mac. The keyboard is based in english layout
 
 ## Functions
 
-| Function            | Description                                                |
-|---------------------|------------------------------------------------------------|
-| Test                | Just sent a test text                                      |
-| Rick                | Send [this](https://www.youtube.com/watch?v=dQw4w9WgXcQ) and press enter                              |
-| Random              | Wait 1 or 10 minutes and send any function bellow this one |
-| Backspace           | -                                                          |
-| Home                | -                                                          |
-| Alt + Tab           | -                                                          |
-| Ctrl + Alt + Delete | -                                                          |
-| Esc                 | -                                                          |
-| Enter               | -                                                          |
-| Mute                | -                                                          |
-| Up                  | Up arrow                                                   |
-| GUI                 | Windows button                                             |
-| Caps Lock           | -                                                          |
-| Logout              | Logout the active user                                     |
+| Function            | Description                                                                            |
+|---------------------|----------------------------------------------------------------------------------------|
+| Test                | Just sent a test text                                                                  |
+| Rick                | Send [this](https://www.youtube.com/watch?v=dQw4w9WgXcQ) and press enter               |
+| Random              | Wait 1 or 10 minutes and send any function bellow this one, press action again to exit |
+| Backspace           | -                                                                                      |
+| Home                | -                                                                                      |
+| Alt + Tab           | -                                                                                      |
+| Ctrl + Alt + Delete | -                                                                                      |
+| Esc                 | -                                                                                      |
+| Enter               | -                                                                                      |
+| Mute                | -                                                                                      |
+| Up                  | Up arrow                                                                               |
+| GUI                 | Windows button                                                                         |
+| Caps Lock           | -                                                                                      |
+| Logout              | Logout the active user                                                                 |
 
 ## Troubleshooting
 
