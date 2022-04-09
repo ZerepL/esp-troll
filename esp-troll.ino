@@ -4,7 +4,7 @@
 #include <ezButton.h>
 
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2);
-BleKeyboard bleKeyboard;
+BleKeyboard bleKeyboard("GenericMonitor");
 
 ezButton buttonUp(34);
 ezButton buttonDown(39);
@@ -15,8 +15,9 @@ boolean action = false;
 
 int page = 1;
 int maxPage = 14;
+int randomCount = 0;
 
-void setup() {  
+void setup() {
   lcd.init();
   lcd.backlight();
 
@@ -57,6 +58,7 @@ void loop() {
 
     if (randomMode) {
       randomMode = false;
+      randomCount = 0;
     }
 
     lcd.clear();
@@ -65,9 +67,17 @@ void loop() {
   lcd.setCursor(0, 0);
 
   if (randomMode) {
-    lcd.clear();
-    page = random(4, maxPage);
-    delay(random(60000, 600000));
+
+    if (randomCount <= 0) {
+      randomCount = random(2400, 24000); // Each loop take ~25 ms - (1 minute to 10 minutes)
+      
+      page = random(4, maxPage);
+      action = true;
+
+      lcd.clear();
+    }
+    
+    randomCount--;
   }
   
   switch (page) {
@@ -112,7 +122,7 @@ void loop() {
     case 4:
       lcd.print("backspace");
 
-      if (action || randomMode) {
+      if (action) {
         bleKeyboard.press(KEY_BACKSPACE);
         delay(100);
         bleKeyboard.releaseAll();
@@ -125,7 +135,7 @@ void loop() {
     case 5:
       lcd.print("home");
       
-      if (action || randomMode) {
+      if (action) {
         bleKeyboard.press(KEY_HOME);
         delay(100);
         bleKeyboard.releaseAll();
@@ -138,7 +148,7 @@ void loop() {
      case 6:
       lcd.print("alt + tab");
 
-      if (action || randomMode) {
+      if (action) {
         bleKeyboard.press(KEY_LEFT_ALT);
         bleKeyboard.press(KEY_TAB);
         delay(100);
@@ -156,7 +166,7 @@ void loop() {
     case 7:
       lcd.print("ctrl + alt + del");
 
-      if (action || randomMode) {
+      if (action) {
         bleKeyboard.press(KEY_LEFT_CTRL);
         bleKeyboard.press(KEY_LEFT_ALT);
         bleKeyboard.press(KEY_DELETE);
@@ -171,7 +181,7 @@ void loop() {
     case 8:
       lcd.print("esc");
 
-      if (action || randomMode) {
+      if (action) {
         bleKeyboard.press(KEY_ESC);
         delay(100);
         bleKeyboard.releaseAll();
@@ -184,7 +194,7 @@ void loop() {
     case 9:
       lcd.print("enter");
 
-      if (action || randomMode) {
+      if (action) {
         bleKeyboard.press(KEY_NUM_ENTER);
         delay(100);
         bleKeyboard.releaseAll();
@@ -197,7 +207,7 @@ void loop() {
     case 10:
       lcd.print("mute");
 
-      if (action || randomMode) {
+      if (action) {
         bleKeyboard.press(KEY_MEDIA_MUTE);
         delay(100);
         bleKeyboard.releaseAll();
@@ -210,7 +220,7 @@ void loop() {
     case 11:
       lcd.print("up");
 
-      if (action || randomMode) {
+      if (action) {
         bleKeyboard.press(KEY_UP_ARROW);
         delay(100);
         bleKeyboard.releaseAll();
@@ -223,7 +233,7 @@ void loop() {
     case 12:
       lcd.print("GUI");
 
-      if (action || randomMode) {
+      if (action) {
         bleKeyboard.press(KEY_LEFT_GUI);
         delay(100);
         bleKeyboard.releaseAll();
@@ -236,7 +246,7 @@ void loop() {
     case 13:
       lcd.print("caps lock");
 
-      if (action || randomMode) {
+      if (action) {
         bleKeyboard.press(KEY_CAPS_LOCK);
         delay(100);
         bleKeyboard.releaseAll();
@@ -249,7 +259,7 @@ void loop() {
     case 14:
       lcd.print("logout");
 
-      if (action || randomMode) {
+      if (action) {
         bleKeyboard.press(KEY_LEFT_CTRL);
         bleKeyboard.press(KEY_LEFT_ALT);
         bleKeyboard.press(KEY_DELETE);
@@ -268,8 +278,13 @@ void loop() {
       
       break;
   }
-  
+
   lcd.setCursor(0, 1);
-  lcd.printf("Page %d", page);
+  
+  if (randomMode) {
+    lcd.print("Random ON");
+  } else {
+    lcd.printf("Page %d", page);
+  }
   
 }

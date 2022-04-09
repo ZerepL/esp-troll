@@ -53,11 +53,3 @@ It works with Linux and Windows, I never tested with Mac. The keyboard is based 
 ### My code do not upload
 
 Check if you are using the GND pin above 5V, if you are using, than change to other one, like in the Circuit pic.
-
-### I'm stuck in random mode
-
-Press "EN" to reset your Esp
-
-## TODO
-
- * Find a way to exit from random mode.
