@@ -28,6 +28,8 @@ Troll your friends with a circuit that simulate a keyboard and send some pre-pro
 
 Upload the esp-troll.ino code to your Esp, power on and connect to your friend's computer. It should appear with the name **GenericMonitor** (You can change this name in line 7).
 
+If is not connect it will appear a message if you want to ignore, for that, just press the action button.
+
 Use the buttons 34 and 39 to navegate through the panel, when you find the one that you like, simple press the action button (35).
 It works with Linux and Windows, I never tested with Mac. The keyboard is based in english layout
 
@@ -47,8 +49,10 @@ It works with Linux and Windows, I never tested with Mac. The keyboard is based 
 | Mute                | -                                                                                      |
 | Up                  | Up arrow                                                                               |
 | GUI                 | Windows button                                                                         |
+| lock                | Lock the pc                                                                            |
 | Caps Lock           | -                                                                                      |
-| Logout              | Logout the active user                                                                 |
+| Logout Linux        | Logout a linux user                                                                    |
+| Logout winds        | Logout a windows user                                                                  |
 
 ## Troubleshooting
 
