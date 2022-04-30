@@ -14,8 +14,9 @@ boolean randomMode = false;
 boolean action = false;
 
 int page = 1;
-int maxPage = 14;
+int maxPage = 16;
 int randomCount = 0;
+int skipCheckConnection = 0;
 
 void setup() {
   lcd.init();
@@ -28,68 +29,39 @@ void setup() {
   bleKeyboard.begin();
 }
 
-void loop() {
-  buttonUp.loop();
-  buttonDown.loop();
-  buttonAction.loop();
-
-  if(buttonUp.isPressed()) {
-    if (page >= maxPage) {
-      page = maxPage;
-    } else {
-      page++;
-    }
-
-    lcd.clear();
-  }
-
-  if(buttonDown.isPressed()) {
-    if (page <= 1) {
-      page = 1;
-    } else {
-      page--;
-    }
-
-    lcd.clear();
-  }
-
-  if(buttonAction.isPressed()) {
-    action = true;
-
-    if (randomMode) {
-      randomMode = false;
-      randomCount = 0;
-    }
-
-    lcd.clear();
-  }
-
-  lcd.setCursor(0, 0);
-
-  if (randomMode) {
-
-    if (randomCount <= 0) {
-      randomCount = random(2400, 24000); // Each loop take ~25 ms - (1 minute to 10 minutes)
-      
-      page = random(4, maxPage);
-      action = true;
-
-      lcd.clear();
-    }
-    
-    randomCount--;
-  }
+void checkConnection() {
+  int connected = 0;
   
+  if (bleKeyboard.isConnected()) {
+    connected = 1;
+    skipCheckConnection = 1;
+    lcd.clear();
+  } else {
+    lcd.setCursor(0, 0);
+    lcd.print("Not connected");
+    lcd.setCursor(0, 1);
+    lcd.print("press action");
+  }
+
+  if (buttonAction.isPressed()) {
+    connected = 1;
+    skipCheckConnection = 1;
+    lcd.clear();
+  }
+
+}
+
+void actions() {
   switch (page) {
     case 1:
     
-    if (action) {
+      if (action) {
         bleKeyboard.print("test");
 
         action = false;
       }
     
-      lcd.print("test");
+      lcd.print("send test");
       break;
       
     case 2:
@@ -118,7 +90,7 @@ void loop() {
       }
 
       break;
-      
+
     case 4:
       lcd.print("backspace");
 
@@ -257,7 +229,21 @@ void loop() {
       break;
 
     case 14:
-      lcd.print("logout");
+      lcd.print("lock");
+
+      if (action) {
+        bleKeyboard.press(KEY_LEFT_GUI);
+        bleKeyboard.press('l');
+        delay(100);
+        bleKeyboard.releaseAll();
+
+        action = false;
+      }
+      
+      break;
+
+    case 15:
+      lcd.print("logout Linux");
 
       if (action) {
         bleKeyboard.press(KEY_LEFT_CTRL);
@@ -277,14 +263,110 @@ void loop() {
       }
       
       break;
+
+    case 16:
+      lcd.print("logout winds");
+
+      if (action) {
+        bleKeyboard.press(KEY_LEFT_CTRL);
+        bleKeyboard.press(KEY_LEFT_ALT);
+        bleKeyboard.press(KEY_DELETE);
+        delay(100);
+        bleKeyboard.releaseAll();
+        delay(100);
+        bleKeyboard.press(KEY_DOWN_ARROW);
+        delay(50);
+        bleKeyboard.release(KEY_DOWN_ARROW);
+        delay(100);
+        bleKeyboard.press(KEY_DOWN_ARROW);
+        delay(50);
+        bleKeyboard.release(KEY_DOWN_ARROW);
+        delay(100);
+        bleKeyboard.press(KEY_NUM_ENTER);
+        delay(100);
+        bleKeyboard.releaseAll();
+
+        action = false;
+      }
+      
+      break;
+
   }
 
-  lcd.setCursor(0, 1);
-  
-  if (randomMode) {
-    lcd.print("Random ON");
+}
+
+void checkButtons() {
+  if(buttonUp.isPressed()) {
+    if (page >= maxPage) {
+      page = maxPage;
+
+    } else {
+      page++;
+    }
+
+    lcd.clear();
+  }
+
+  if(buttonDown.isPressed()) {
+    if (page <= 1) {
+      page = 1;
+    } else {
+      page--;
+    }
+
+    lcd.clear();
+  }
+
+  if(buttonAction.isPressed()) {
+    action = true;
+
+    if (randomMode) {
+      randomMode = false;
+      randomCount = 0;
+    }
+
+    lcd.clear();
+  }
+}
+
+
+void loop() {
+  buttonUp.loop();
+  buttonDown.loop();
+  buttonAction.loop();
+
+  if (not skipCheckConnection) {
+    checkConnection();
+
   } else {
-    lcd.printf("Page %d", page);
+    checkButtons();
+
+    lcd.setCursor(0, 0);
+
+    if (randomMode) {
+
+      if (randomCount <= 0) {
+        randomCount = random(2400, 24000); // Each loop take ~25 ms - (1 minute to 10 minutes)
+        
+        page = random(4, maxPage);
+        action = true;
+
+        lcd.clear();
+      }
+      
+      randomCount--;
+    }
+    
+    actions();
+
+    lcd.setCursor(0, 1);
+    
+    if (randomMode) {
+      lcd.print("Random ON");
+    } else {
+      lcd.printf("Page %d", page);
+    }
+
   }
   
 }
